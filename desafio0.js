@@ -1,5 +1,5 @@
 let auxkey = 23;
-let numero = 3;
+let numero = 2;
 let keyToArr = String(auxkey).split('').map(Number);
 let keyLength = keyToArr.length;
 let frase = "YO HE LOGRADO ENCENDER UNA CERILLA"; //resultado = ar jh nr iu cg qh of gp fh tx od eh tl nñ c
