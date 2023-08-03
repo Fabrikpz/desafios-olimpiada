@@ -13,7 +13,7 @@ const test = (word, key, numero) => {
     let palabra = palabraSinEspacios.toLowerCase().split("");
 
     palabra.map((letra) => {
-        let indice = parseInt((abc.indexOf(letra) + key[auxNumber]) % 27); 
+        let indice = parseInt((abc.indexOf(letra) + key[auxNumber]) % abc.length); 
         fraseRes.push(abc[indice]);
         auxNumber++;
         cont++;
