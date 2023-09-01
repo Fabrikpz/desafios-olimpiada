@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 
-const int a = 6;
+const int N = 6;
 
 std::vector<int> divisores;
 
@@ -13,26 +13,26 @@ void obtenerDivisores(int num) {
     }
 }
 
-void cadenas(int a, int results[]) {
-    std::vector<int> suma;
-    std::vector<int> suma2;
-    int resMax = 0;
-    int resMin = 0;
-    int a2 = a;
-
-    for (int i = 0; i < divisores.size(); i++) {
-        if (a % divisores[i] == 0) {
-            suma.push_back(divisores[i]);
-            a = divisores[i];
+bool esPrimo(int num){
+    if(num == 1 || num == 2 || num == 3 || num == 5 || num == 7){
+        return true; 
+    }
+    for(int i = 2; i <= num/2; i++){
+        if(num % i == 0){
+            return false;
         }
     }
+    return true;
+}
 
-    for (int i = divisores.size()-1; i >= 0 ; i--) {
-        if (a2 % divisores[i] == 0) {
-            suma2.push_back(divisores[i]);
-            if(divisores[i] != 1){
-                a2 = divisores[i-1];
-            }
+void gaston(int num, int results[]){
+    std::vector<int> suma;
+    int resMax = 0;
+
+    for (int i = 0; i < divisores.size(); i++) {
+        if (num % divisores[i] == 0) {
+            suma.push_back(divisores[i]);
+            num = divisores[i];
         }
     }
 
@@ -40,19 +40,39 @@ void cadenas(int a, int results[]) {
         resMax += num;
     }
 
-    for (int num : suma2) {
+    results[0] = resMax;
+}
+
+void agustin(int num, int results[]) {
+    std::vector<int> suma;
+    int resMin = 0;
+
+    for (int i = num; i >= 1; i--) {
+        if (!suma.empty() && suma[suma.size() - 1] == 2) {
+            suma.push_back(1);
+            break;
+        }
+        if (esPrimo(i)) {
+            if (num % i == 0) {
+                suma.push_back(num / i);
+                num = num / i;
+            }
+        }
+    }
+
+    for (int num : suma) {
         resMin += num;
     }
 
-    results[0] = resMax;
-    results[1] = resMin; 
+    results[1] = resMin;
 }
 
 int main() {
-    obtenerDivisores(a);
+    obtenerDivisores(N);
 
     int results[2];
-    cadenas(a, results); 
+    gaston(N, results);
+    agustin(N, results);
 
     std::cout << "Resultado máximo: " << results[0] << std::endl;
     std::cout << "Resultado mínimo: " << results[1] << std::endl;
