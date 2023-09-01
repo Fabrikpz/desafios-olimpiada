@@ -1,5 +1,4 @@
-const a = 6;
-
+const N = 60;
 const divisores = [];
 
 function obtenerDivisores(num) {
@@ -8,52 +7,53 @@ function obtenerDivisores(num) {
             divisores.push(i);
         }
     }
+    console.log(divisores)
 }
 
-obtenerDivisores(a);
+obtenerDivisores(N);
 
-function cadenas(a) {
-    const suma = [];
-    const suma2 = [];
-    let resMax = 0;
-    let resMin = 0;
-    let a2 = a;
+function gaston(num){
+    let suma = [];
 
     for (let i = 0; i < divisores.length; i++) {
-        if (a % divisores[i] === 0) {
+        if (num % divisores[i] === 0) {
             suma.push(divisores[i]);
-            a = divisores[i];
+            num = divisores[i];
         }
     }
 
-    let i = divisores.length - 1;
-    while (i >= 0) {
-        const num = divisores[i];
-        if (a2 % num === 0) {
-            suma2.push(num);
-            if (num !== 1) {
-                a2 = divisores[i - 1];
-                if (a2 % num === 0) {
-                    suma2.push(num);
-                }
-            }
-        }
-        i--;
-    }
-
-    for (let num of suma) {
-        resMax += num;
-    }
-
-    for (let num of suma2) {
-        resMin += num;
-    }
-
-    results[0] = resMax;
-    results[1] = resMin;
+    //12 + 6 + 3 + 1 = 22.
+    return "Resultado máximo: "+ suma.reduce((n1, n2) => n1 + n2);
 }
 
-cadenas(a);
+function agustin(num) {
+    let suma = [num];
+    
+    for(let i = num; i >= 1; i--){
+        if(suma[suma.length - 1] == 2){
+            suma.push(1);
+            break;
+        }
+        if(esPrimo(i)){
+            if(num % i == 0){
+                suma.push(num/i);
+                num = num/i;
+            }
+        }
+    }
+    //12 + 4 + 2 + 1 = 19.
+    return "\n" + "Resultado mínimo: " + suma.reduce((n1, n2) => n1 + n2); 
+}
 
-console.log("Resultado máximo:", resMax);
-console.log("Resultado mínimo:", resMin);
+function esPrimo(num){
+    if(num == 1 || num == 2 || num == 3 || num == 5 || num == 7){
+        return true; 
+    }
+    for(i = 2; i <= num/2; i++){
+        if(num % i == 0){
+            return false;
+        }
+    }
+    return true;
+}
+console.log(gaston(N), agustin(N));
